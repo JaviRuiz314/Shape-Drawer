@@ -3,4 +3,10 @@
 	height: inherit;
 	display: flex;
 	flex-direction: column;
+	padding: 2% 2% 2% 2%;
+}
+
+.image-placeholder {
+	width: 50%;
+	height: 100%;
 }
