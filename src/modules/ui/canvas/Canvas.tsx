@@ -23,20 +23,19 @@ const Canvas = ({ width, height }: CanvasProps) => {
 		})
 	);
 
-
-	const readFile = (event: any) =>  {
+	const readFile = (event: any) => {
 		const reader = new FileReader();
 		reader.onload = function (event: any) {
 			const image = new Image();
 			image.src = event.target.result;
-			image.onload = function() {
+			image.onload = function () {
 				const img: any = new fabric.Image(image);
 				img.set({
-					scaleX : canvas.getWidth()/ img.width,
-					scaleY: canvas.getHeight()/ img.height,
+					scaleX: canvas.getWidth() / img.width,
+					scaleY: canvas.getHeight() / img.height,
 				});
-				canvas.add(img).setActiveObject(img).renderAll();
-			  }
+				canvas.setBackgroundImage(img).renderAll();
+			}
 		}
 		reader.readAsDataURL(event.target.files[0]);
 	}
