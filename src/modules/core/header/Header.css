@@ -1,0 +1,13 @@
+.header {
+	background-color: #282c34;
+	min-height: 7vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	color: white;
+  }
+
+  .header-text {
+	text-align: left;
+	margin-left: 2%;
+  }
