@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { fabric } from "fabric";
 import './Canvas.css';
+import UploadButton from '../../core/uploadButton/UploadButton';
+
 
 
 interface CanvasProps {
@@ -42,7 +44,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
 
 	return (
 		<div>
-			<input type="file" id="file" onChange={(event) => readFile(event)}></input>
+			<UploadButton onClick={readFile} />
 			<canvas id='canvas' className='canvas-border'>
 			</canvas>
 		</div>
