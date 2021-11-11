@@ -19,6 +19,7 @@ let activeShape: any;
 const Canvas = ({ width, height }: CanvasProps) => {
 
 	const [canvas, setCanvas] = useState<any>(false);
+	const [isDrawAllowed, setisDrawAllowed] = useState<any>(true);
 
 	useEffect(() => {
 		setCanvas(initCanvas());
@@ -175,6 +176,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
 				canvas.setBackgroundImage(img).renderAll();
 			}
 		}
+		setisDrawAllowed(false);
 		reader.readAsDataURL(event.target.files[0]);
 	}
 
@@ -211,7 +213,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
 		<div>
 			<div className='button-menu'>
 				<UploadButton onClick={readFile} />
-				<Button label='Draw' onClick={drawPolygon} />
+				<Button label='Draw' onClick={drawPolygon} disabled={isDrawAllowed}/>
 			</div>
 			<canvas id='canvas' className='canvas-border'>
 			</canvas>
