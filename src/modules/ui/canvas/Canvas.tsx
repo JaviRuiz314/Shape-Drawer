@@ -13,11 +13,22 @@ interface CanvasProps {
 	parentCallback: Function;
 }
 
+interface IPolygonWithId extends fabric.IPolylineOptions {
+	id: number;
+}
+
 let polygonMode: boolean = false;
 let pointArray: any[] = [];
 let lineArray: any[] = [];
 let activeLine: any;
 let activeShape: any;
+
+function generateRandomId() {
+	const min = 99;
+	const max = 999999;
+	const random = Math.floor(Math.random() * (max - min + 1)) + min;
+	return new Date().getTime() + random;
+}
 
 const Canvas = ({ width, height, img, isDrawModeActive, parentCallback }: CanvasProps) => {
 
@@ -148,15 +159,18 @@ const Canvas = ({ width, height, img, isDrawModeActive, parentCallback }: Canvas
 			canvas.remove(line);
 		});
 		canvas.remove(activeShape).remove(activeLine);
-		const polygon = new fabric.Polygon(points, {
+		const options = {
 			stroke: '#333333',
 			strokeWidth: 0.5,
 			fill: 'red',
 			opacity: 1,
 			hasBorders: false,
 			hasControls: false,
-			selectable: false
-		});
+			selectable: false,
+			id: generateRandomId()
+		} as IPolygonWithId;
+
+		const polygon = new fabric.Polygon(points, options);
 		canvas.add(polygon);
 
 		activeLine = null;
