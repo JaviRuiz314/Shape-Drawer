@@ -1,14 +1,9 @@
 import React, { useRef } from "react";
 import Button from "../../ui/button/Button";
+import { IUploadButtonProps } from "../../shared/types"; 
 import './UploadButton.css';
 
-interface UploadButtonProps {
-	onClick?:
-	| ((event: React.MouseEvent<HTMLButtonElement>) => void)
-	| undefined;
-}
-
-const UploadButton = ({onClick = () => {}}: UploadButtonProps) => {
+const UploadButton = ({onClick = () => {}}: IUploadButtonProps) => {
 	const inputFileRef = useRef<any>(null);
 
 	const onBtnClick = () => {

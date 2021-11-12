@@ -1,19 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fabric } from "fabric";
+import { ICanvasProps, IPolygonWithId } from '../../shared/types';
 import './Canvas.css';
-
-
-interface CanvasProps {
-	width: number;
-	height: number;
-	img: HTMLImageElement | null;
-	isDrawModeActive: boolean;
-	parentCallback: Function;
-}
-
-interface IPolygonWithId extends fabric.IPolylineOptions {
-	id: number;
-}
 
 let polygonMode: boolean = false;
 let pointArray: any[] = [];
@@ -28,7 +16,7 @@ function generateRandomId() {
 	return new Date().getTime() + random;
 }
 
-const Canvas = ({ width, height, img, isDrawModeActive, parentCallback }: CanvasProps) => {
+const Canvas = ({ width, height, img, isDrawModeActive, parentCallback }: ICanvasProps) => {
 
 	const [canvas, setCanvas] = useState<any>(false);
 

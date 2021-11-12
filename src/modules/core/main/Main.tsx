@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import Canvas from '../../ui/canvas/Canvas';
+import React, { useState } from 'react';
 import UploadButton from '../uploadButton/UploadButton';
-import Button from '../../ui/button/Button';
-import './Main.css';
 import ShapesList from '../shapesList/ShapesList';
-
-interface IShape {
-	id: number,
-	name: string
-}
+import Button from '../../ui/button/Button';
+import Canvas from '../../ui/canvas/Canvas';
+import { IShape } from '../../shared/types';
+import './Main.css';
 
 const Main = () => {
 	const [image, setImage] = useState<HTMLImageElement | null>(null);
