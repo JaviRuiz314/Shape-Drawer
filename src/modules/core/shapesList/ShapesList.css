@@ -3,3 +3,8 @@
 	border: 1px solid black;
 	min-height: 30%;
 }
+
+ul {
+	display: flex;
+	flex-direction: column;
+}
