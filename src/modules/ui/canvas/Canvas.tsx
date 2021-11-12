@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fabric } from "fabric";
 import './Canvas.css';
-import UploadButton from '../../core/uploadButton/UploadButton';
-import Button from '../button/Button';
 
 
 interface CanvasProps {
@@ -176,7 +174,7 @@ const Canvas = ({ width, height, img, isDrawModeActive, parentCallback }: Canvas
 		activeLine = null;
 		activeShape = null;
 		polygonMode = false;
-		parentCallback();
+		parentCallback(options.id);
 	}
 
 	const initCanvas = () => (
