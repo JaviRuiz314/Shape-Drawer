@@ -33,3 +33,10 @@ export interface IButtonProps {
 	| ((event: React.MouseEvent<HTMLButtonElement>) => void)
 	| undefined;
 }
+
+export interface IInputProps {
+	placeholder: 'string',
+	initValue: 'string',
+	customClass: 'string',
+	type: 'string'
+}
