@@ -8,6 +8,9 @@ import Button from '../button/Button';
 interface CanvasProps {
 	width: number;
 	height: number;
+	img: HTMLImageElement | null;
+	isDrawModeActive: boolean;
+	parentCallback: Function;
 }
 
 let polygonMode: boolean = false;
@@ -16,14 +19,21 @@ let lineArray: any[] = [];
 let activeLine: any;
 let activeShape: any;
 
-const Canvas = ({ width, height }: CanvasProps) => {
+const Canvas = ({ width, height, img, isDrawModeActive, parentCallback }: CanvasProps) => {
 
 	const [canvas, setCanvas] = useState<any>(false);
-	const [isDrawAllowed, setisDrawAllowed] = useState<any>(true);
 
 	useEffect(() => {
 		setCanvas(initCanvas());
 	}, []);
+
+	useEffect(() => {
+		if (img) loadImage(img);
+	}, [img]);
+
+	useEffect(() => {
+		if (isDrawModeActive) drawPolygon();
+	}, [isDrawModeActive]);
 
 	useEffect(() => {
 		if (!canvas) { return; }
@@ -152,6 +162,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
 		activeLine = null;
 		activeShape = null;
 		polygonMode = false;
+		parentCallback();
 	}
 
 	const initCanvas = () => (
@@ -162,22 +173,15 @@ const Canvas = ({ width, height }: CanvasProps) => {
 		})
 	)
 
-	const readFile = (event: any) => {
-		const reader = new FileReader();
-		reader.onload = function (event: any) {
-			const image = new Image();
-			image.src = event.target.result;
-			image.onload = function () {
-				const img: any = new fabric.Image(image);
-				img.set({
-					scaleX: canvas.getWidth() / img.width,
-					scaleY: canvas.getHeight() / img.height,
-				});
-				canvas.setBackgroundImage(img).renderAll();
-			}
+	const loadImage = (image: HTMLImageElement) => {
+		image.onload = function () {
+			const img: any = new fabric.Image(image);
+			img.set({
+				scaleX: canvas.getWidth() / img.width,
+				scaleY: canvas.getHeight() / img.height,
+			});
+			canvas.setBackgroundImage(img).renderAll();
 		}
-		setisDrawAllowed(false);
-		reader.readAsDataURL(event.target.files[0]);
 	}
 
 	const drawPolygon = () => {
@@ -188,14 +192,14 @@ const Canvas = ({ width, height }: CanvasProps) => {
 	}
 
 	const isCurrentClickOnTheFirstPoint = (coordinates: any, firstPoint: fabric.Circle) => {
-		if(!firstPoint.left || !firstPoint.top ) return false;
+		if (!firstPoint.left || !firstPoint.top) return false;
 
-		if((coordinates.layerX - (firstPoint.left - 5)) * (coordinates.layerX - (firstPoint.left + 5)) < 0
+		if ((coordinates.layerX - (firstPoint.left - 5)) * (coordinates.layerX - (firstPoint.left + 5)) < 0
 			&&
 			(coordinates.layerY - (firstPoint.top - 5)) * (coordinates.layerY - (firstPoint.top + 5)) < 0
 		) {
 			return true;
-		} 
+		}
 
 		return false;
 	}
@@ -211,10 +215,6 @@ const Canvas = ({ width, height }: CanvasProps) => {
 
 	return (
 		<div>
-			<div className='button-menu'>
-				<UploadButton onClick={readFile} />
-				<Button label='Draw' onClick={drawPolygon} disabled={isDrawAllowed}/>
-			</div>
 			<canvas id='canvas' className='canvas-border'>
 			</canvas>
 		</div>
@@ -223,7 +223,9 @@ const Canvas = ({ width, height }: CanvasProps) => {
 
 Canvas.defaultProps = {
 	width: window.innerWidth / 2,
-	height: window.innerHeight / 2
+	height: window.innerHeight / 2,
+	image: null,
+	isDrawModeActive: false
 };
 
 export default Canvas;

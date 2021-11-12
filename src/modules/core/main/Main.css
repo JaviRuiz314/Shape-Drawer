@@ -10,3 +10,9 @@
 	width: 50%;
 	height: 100%;
 }
+
+.button-menu {
+	display: flex;
+	flex-direction: row;
+	padding: 5px;
+}
