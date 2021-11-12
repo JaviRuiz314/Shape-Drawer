@@ -35,8 +35,8 @@ export interface IButtonProps {
 }
 
 export interface IInputProps {
-	placeholder: 'string',
-	initValue: 'string',
-	customClass: 'string',
-	type: 'string'
+	placeholder: string,
+	initValue: string,
+	customClass: string,
+	type: string
 }

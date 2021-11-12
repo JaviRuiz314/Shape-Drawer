@@ -1,4 +1,5 @@
 import React from "react";
+import Input from '../../ui/input/Input';
 import { IShapeListProps } from "../../shared/types";
 import './ShapesList.css'
 
@@ -10,7 +11,7 @@ const ShapesList = ({ shapeList }: IShapeListProps) => {
 			<ul>
 			{shapeList.map((shape) => {
 				return(
-				<li key={shape.id}> <h1>{`Test id: ${shape.id}`}</h1></li>)
+				<li key={shape.id}> <Input type='text' placeholder="Enter a new name..."  /></li>)
 			})}
 		</ul>
 		);
