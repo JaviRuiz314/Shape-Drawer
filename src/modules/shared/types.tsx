@@ -35,8 +35,12 @@ export interface IButtonProps {
 }
 
 export interface IInputProps {
+	id: string,
 	placeholder: string,
 	initValue: string,
 	customClass: string,
-	type: string
+	type: string,
+	onBlur?:
+	| ((event: React.FocusEvent<HTMLInputElement>) => void)
+	| undefined;
 }

@@ -28,9 +28,9 @@ const Main = () => {
 	}
 
 	const receivePolygon = (shapeId: number) => {
-		setisDrawModeActive(false);
 		shapeList.push({id: shapeId, name: ''});
 		setShapeList(shapeList);
+		setisDrawModeActive(false);
 	}
 
 	return (
