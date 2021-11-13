@@ -3,6 +3,7 @@ import UploadButton from '../uploadButton/UploadButton';
 import ShapesList from '../shapesList/ShapesList';
 import Button from '../../ui/button/Button';
 import Canvas from '../../ui/canvas/Canvas';
+import { FaDrawPolygon } from 'react-icons/fa';
 import { IShape } from '../../shared/types';
 import './Main.css';
 
@@ -42,12 +43,12 @@ const Main = () => {
 			<div className='menu'>
 				<div className='button-menu'>
 					<UploadButton onClick={readFile} />
-					<Button label='Draw' onClick={enableDrawMode} disabled={isDrawNotAllowed} />
+					<Button label='Draw' onClick={enableDrawMode} disabled={isDrawNotAllowed} icon={<FaDrawPolygon size={30}/>} />
 				</div>
 				<ShapesList shapeList={shapeList}/>
 			</div>
 		</div>
-	)
+	);
 }
 
 export default Main;
