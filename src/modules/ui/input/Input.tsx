@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IInputProps } from '../../shared/types';
 import './Input.css';
 
-const Input = ({id, placeholder, initValue, customClass, type, onBlur = () => {} }: IInputProps) => {
+const Input = ({ id, placeholder, initValue, customClass, type, disabled, onBlur = () => { } }: IInputProps) => {
 	const [value, setValue] = useState<string>(initValue);
 
 	const handleInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -11,12 +11,12 @@ const Input = ({id, placeholder, initValue, customClass, type, onBlur = () => {}
 	}
 
 	const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-		if(event.target.value) onBlur(event);
+		if (event.target.value) onBlur(event);
 	}
 
 	return (
 		<div className={customClass}>
-			<input id={id} type={type} placeholder={placeholder} value={value} onChange={handleInputValue} onBlur={handleBlur}></input>
+			<input id={id} type={type} placeholder={placeholder} value={value} disabled={disabled} onChange={handleInputValue} onBlur={handleBlur}></input>
 		</div>
 
 	)
@@ -26,6 +26,7 @@ Input.defaultProps = {
 	placeholder: '',
 	initValue: '',
 	customClass: '',
-	type: 'text'
+	type: 'text',
+	disabled: false
 };
 export default Input

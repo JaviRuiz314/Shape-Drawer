@@ -40,6 +40,7 @@ export interface IInputProps {
 	initValue: string,
 	customClass: string,
 	type: string,
+	disabled: boolean,
 	onBlur?:
 	| ((event: React.FocusEvent<HTMLInputElement>) => void)
 	| undefined;
