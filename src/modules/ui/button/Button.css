@@ -1,12 +1,17 @@
 .label-container {
-	padding: 0 1 rem
+	padding: 0 1 rem;
 }
 
 .default-button {
-	min-width: 100px;
+	display: flex;
+	flex-direction: row;
+	min-width: 115px;
+	min-height: 45px;
 	font-size: 1rem;
 	border: 1.5px solid transparent;
 	border-radius: 0.3rem;
 	box-shadow: 0 0 10px #1e252b26;
 	outline: none;
+	align-items: center;
+	column-gap: 10%;
 }

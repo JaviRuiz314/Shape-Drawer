@@ -29,6 +29,7 @@ export interface IButtonProps {
 	label: string,
 	style: string,
 	disabled: boolean,
+	icon?: JSX.Element,
 	onClick?:
 	| ((event: React.MouseEvent<HTMLButtonElement>) => void)
 	| undefined;
