@@ -8,7 +8,7 @@ import './Main.css';
 
 const Main = () => {
 	const [image, setImage] = useState<HTMLImageElement | null>(null);
-	const [isDrawNotAllowed, setisDrawAllowed] = useState<any>(true);
+	const [isDrawNotAllowed, setisNotDrawAllowed] = useState<any>(true);
 	const [isDrawModeActive, setisDrawModeActive] = useState<any>(false);
 	const [shapeList, setShapeList] = useState<IShape[]>([]);
 
@@ -19,7 +19,7 @@ const Main = () => {
 			img.src = event.target.result;
 			setImage(img);
 		}
-		setisDrawAllowed(false);
+		setisNotDrawAllowed(false);
 		reader.readAsDataURL(event.target.files[0]);
 	}
 
