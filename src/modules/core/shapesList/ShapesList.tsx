@@ -16,7 +16,7 @@ const ShapesList = ({ shapeList }: IShapeListProps) => {
 		));
 
 		const input: any = document.getElementById(event.target.id);
-		if(input && input.disabled) input.disabled = true;
+		input.disabled = true;
 	}
 
 	const renderListOfShapes = (): any => {
