@@ -169,7 +169,7 @@ const Canvas = ({ width, height, img, isDrawModeActive, parentCallback }: ICanva
 
 	const initCanvas = () => (
 		new fabric.Canvas('canvas', {
-			backgroundColor: 'white',
+			backgroundColor: '#e3e3e3',
 			height: height,
 			width: width
 		})
