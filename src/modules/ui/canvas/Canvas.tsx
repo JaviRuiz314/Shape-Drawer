@@ -25,7 +25,9 @@ const Canvas = ({ width, height, img, isDrawModeActive, parentCallback }: ICanva
 	}, []);
 
 	useEffect(() => {
-		if (img) loadImage(img);
+		if (img) {
+			loadImage(img);
+		}
 	}, [img]);
 
 	useEffect(() => {
@@ -174,6 +176,7 @@ const Canvas = ({ width, height, img, isDrawModeActive, parentCallback }: ICanva
 	)
 
 	const loadImage = (image: HTMLImageElement) => {
+		canvas.remove(...canvas.getObjects());
 		image.onload = function () {
 			const img: any = new fabric.Image(image);
 			img.set({

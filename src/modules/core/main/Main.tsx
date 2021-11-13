@@ -19,6 +19,7 @@ const Main = () => {
 			img.src = event.target.result;
 			setImage(img);
 		}
+		setShapeList([]);
 		setisNotDrawAllowed(false);
 		reader.readAsDataURL(event.target.files[0]);
 	}
@@ -45,9 +46,6 @@ const Main = () => {
 				</div>
 				<ShapesList shapeList={shapeList}/>
 			</div>
-
-
-
 		</div>
 	)
 }
