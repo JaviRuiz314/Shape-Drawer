@@ -1,6 +1,8 @@
 .shape-list {
 	background-color: white;
 	border: 1px solid black;
+	border-radius: 0.3rem;
+	box-shadow: 0 0 10px #1e252b26;
 	min-height: 10%;
 }
 
