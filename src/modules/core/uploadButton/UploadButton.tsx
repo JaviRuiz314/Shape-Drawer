@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import Button from "../../ui/button/Button";
+import { FaImage } from 'react-icons/fa';
 import { IUploadButtonProps } from "../../shared/types"; 
 import './UploadButton.css';
 
@@ -21,7 +22,7 @@ const UploadButton = ({onClick = () => {}}: IUploadButtonProps) => {
 			ref={inputFileRef}
 			onChange={(event: any) => handleChangeEvent(event)}
 		/>
-		<Button label='Upload image' onClick={onBtnClick} />
+		<Button label='Upload image' icon={<FaImage size={30} />} onClick={onBtnClick} />
 	</div>
 	);
 
