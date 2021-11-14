@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import Input from '../../ui/input/Input';
 import { IShapeListProps } from "../../shared/types";
 import './ShapesList.css'
@@ -19,7 +19,7 @@ const ShapesList = ({ shapeList }: IShapeListProps) => {
 		input.disabled = true;
 	}
 
-	const renderListOfShapes = (): any => {
+	const renderListOfShapes = (): ReactElement => {
 		return (
 			<ul>
 				{shapeList.map((shape) => {

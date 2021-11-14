@@ -9,8 +9,8 @@ import './Main.css';
 
 const Main = () => {
 	const [image, setImage] = useState<HTMLImageElement | null>(null);
-	const [isDrawNotAllowed, setisNotDrawAllowed] = useState<any>(true);
-	const [isDrawModeActive, setisDrawModeActive] = useState<any>(false);
+	const [isDrawNotAllowed, setisNotDrawAllowed] = useState<boolean>(true);
+	const [isDrawModeActive, setisDrawModeActive] = useState<boolean>(false);
 	const [shapeList, setShapeList] = useState<IShape[]>([]);
 
 	const readFile = (event: any) => {
@@ -20,6 +20,7 @@ const Main = () => {
 			img.src = event.target.result;
 			setImage(img);
 		}
+		// Conditions to restart the canvas
 		setShapeList([]);
 		setisNotDrawAllowed(false);
 		reader.readAsDataURL(event.target.files[0]);

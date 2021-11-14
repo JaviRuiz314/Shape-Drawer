@@ -29,4 +29,4 @@ Input.defaultProps = {
 	type: 'text',
 	disabled: false
 };
-export default Input
+export default Input;

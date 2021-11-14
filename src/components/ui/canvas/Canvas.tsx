@@ -21,13 +21,11 @@ const Canvas = ({ width, height, img, isDrawModeActive, parentCallback }: ICanva
 	const [canvas, setCanvas] = useState<any>(false);
 
 	useEffect(() => {
-		setCanvas(initCanvas());
+		setCanvas(initCanvas()); // On first render we initialize the empty canvas
 	}, []);
 
 	useEffect(() => {
-		if (img) {
-			loadImage(img);
-		}
+		if (img) loadImage(img);
 	}, [img]);
 
 	useEffect(() => {
@@ -36,7 +34,7 @@ const Canvas = ({ width, height, img, isDrawModeActive, parentCallback }: ICanva
 
 	useEffect(() => {
 		if (!canvas) { return; }
-		function handleEvent(event: any, type: string) {
+		function handleEvent(event: MouseEvent, type: string) {
 			switch (type) {
 				case 'down':
 					handleMouseDown(event);
@@ -45,51 +43,41 @@ const Canvas = ({ width, height, img, isDrawModeActive, parentCallback }: ICanva
 					break;
 			}
 		}
-		canvas.on('mouse:down', (event: any) => (handleEvent(event, 'down')));
-		canvas.on('mouse:up', (event: any) => (handleEvent(event, 'up')));
+		canvas.on('mouse:down', (event: MouseEvent) => (handleEvent(event, 'down')));
+		canvas.on('mouse:up', (event: MouseEvent) => (handleEvent(event, 'up')));
 	}, [canvas]);
 
-	const drawActiveElement = (options: any) => {
-		if (activeShape) {
-			const pos = canvas.getPointer(options.e);
-			const points = activeShape.get("points");
-			points.push({
-				x: pos.x,
-				y: pos.y
+	const initCanvas = () => (
+		new fabric.Canvas('canvas', {
+			backgroundColor: '#e3e3e3',
+			height: height,
+			width: width
+		})
+	);
+
+	const loadImage = (image: HTMLImageElement) => {
+		canvas.remove(...canvas.getObjects());
+		image.onload = function () {
+			const img: any = new fabric.Image(image);
+			img.set({
+				scaleX: canvas.getWidth() / img.width,
+				scaleY: canvas.getHeight() / img.height,
 			});
-			const polygon = new fabric.Polygon(points, {
-				stroke: '#333333',
-				strokeWidth: 1,
-				fill: '#cccccc',
-				opacity: 0.3,
-				selectable: false,
-				hasBorders: false,
-				hasControls: false,
-				evented: false,
-				objectCaching: false
-			});
-			canvas.remove(activeShape);
-			canvas.add(polygon);
-			activeShape = polygon;
-			canvas.renderAll();
+			canvas.setBackgroundImage(img).renderAll();
 		}
-		else {
-			const polyPoint = [{ x: (options.e.layerX), y: (options.e.layerY) }];
-			const polygon = new fabric.Polygon(polyPoint, {
-				stroke: '#333333',
-				strokeWidth: 1,
-				fill: '#cccccc',
-				opacity: 0.3,
-				selectable: false,
-				hasBorders: false,
-				hasControls: false,
-				evented: false,
-				objectCaching: false
-			});
-			activeShape = polygon;
-			canvas.add(polygon);
-		}
-	}
+	};
+
+	const drawPolygon = () => { // Sets the variables to allow drawing
+		polygonMode = true;
+		pointArray = [];
+		lineArray = [];
+		activeLine = true;
+	};
+
+	const handleMouseDown = (event: any) => {
+		if (event.e && pointArray.length && isCurrentClickOnTheFirstPoint(event.e, pointArray[0])) generatePolygon(pointArray);
+		if (polygonMode) addPoint(event);
+	};
 
 	const addPoint = (options: any) => {
 		const
@@ -134,6 +122,51 @@ const Canvas = ({ width, height, img, isDrawModeActive, parentCallback }: ICanva
 		canvas.selection = false;
 	}
 
+
+	const drawActiveElement = (options: any) => {
+		if (activeShape) {
+			const pos = canvas.getPointer(options.e);
+			const points = activeShape.get("points");
+			points.push({
+				x: pos.x,
+				y: pos.y
+			});
+			const polygon = new fabric.Polygon(points, {
+				stroke: '#333333',
+				strokeWidth: 1,
+				fill: '#cccccc',
+				opacity: 0.3,
+				selectable: false,
+				hasBorders: false,
+				hasControls: false,
+				evented: false,
+				objectCaching: false
+			});
+			canvas.remove(activeShape);
+			canvas.add(polygon);
+			activeShape = polygon;
+			canvas.renderAll();
+		}
+		else {
+			const polyPoint = [{ x: (options.e.layerX), y: (options.e.layerY) }];
+			const polygon = new fabric.Polygon(polyPoint, {
+				stroke: '#333333',
+				strokeWidth: 1,
+				fill: '#cccccc',
+				opacity: 0.3,
+				selectable: false,
+				hasBorders: false,
+				hasControls: false,
+				evented: false,
+				objectCaching: false
+			});
+			activeShape = polygon;
+			canvas.add(polygon);
+		}
+	}
+
+
+
 	const generatePolygon = (pointArray: fabric.Circle[]) => {
 		const points: any[] = [];
 		pointArray.forEach((point: any) => {
@@ -160,41 +193,16 @@ const Canvas = ({ width, height, img, isDrawModeActive, parentCallback }: ICanva
 
 		const polygon = new fabric.Polygon(points, options);
 		canvas.add(polygon);
-
+		
+		// Once the polygon is generated we return to initial state and returns the random id with a callback 
 		activeLine = null;
 		activeShape = null;
 		polygonMode = false;
 		parentCallback(options.id);
 	}
 
-	const initCanvas = () => (
-		new fabric.Canvas('canvas', {
-			backgroundColor: '#e3e3e3',
-			height: height,
-			width: width
-		})
-	)
-
-	const loadImage = (image: HTMLImageElement) => {
-		canvas.remove(...canvas.getObjects());
-		image.onload = function () {
-			const img: any = new fabric.Image(image);
-			img.set({
-				scaleX: canvas.getWidth() / img.width,
-				scaleY: canvas.getHeight() / img.height,
-			});
-			canvas.setBackgroundImage(img).renderAll();
-		}
-	}
-
-	const drawPolygon = () => {
-		polygonMode = true;
-		pointArray = [];
-		lineArray = [];
-		activeLine = true;
-	}
-
 	const isCurrentClickOnTheFirstPoint = (coordinates: any, firstPoint: fabric.Circle) => {
+		// Apply a range of 5 px on both directions to determine if the user has clicked on the first point
 		if (!firstPoint.left || !firstPoint.top) return false;
 
 		if ((coordinates.layerX - (firstPoint.left - 5)) * (coordinates.layerX - (firstPoint.left + 5)) < 0
@@ -205,24 +213,15 @@ const Canvas = ({ width, height, img, isDrawModeActive, parentCallback }: ICanva
 		}
 
 		return false;
-	}
-
-	const handleMouseDown = (event: any) => {
-		if (event.e && pointArray.length && isCurrentClickOnTheFirstPoint(event.e, pointArray[0])) {
-			generatePolygon(pointArray);
-		}
-		if (polygonMode) {
-			addPoint(event);
-		}
-	}
+	};
 
 	return (
 		<div>
-			<canvas id='canvas' className='canvas-border'>
-			</canvas>
+			<canvas id='canvas' className='canvas-border' />
 		</div>
 	);
 }
+
 
 Canvas.defaultProps = {
 	width: window.innerWidth / 2,
