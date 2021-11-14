@@ -6,8 +6,14 @@
 	min-height: 10%;
 	max-height: 90%;
 	overflow: scroll;
+	-ms-overflow-style: none;  /* IE and Edge */
+	scrollbar-width: none;  /* Firefox */
 }
 
+.shape-list::-webkit-scrollbar {
+	display: none;
+  }
+  
 ul {
 	display: flex;
 	flex-direction: column;
