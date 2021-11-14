@@ -39,7 +39,7 @@ const Main = () => {
 	return (
 		<div className='main'>
 			<div className='image-placeholder'>
-				<Canvas height={750} width={800} img={image} isDrawModeActive={isDrawModeActive} parentCallback={receivePolygon} />
+				<Canvas height={window.innerHeight * 0.75} width={window.innerWidth/2} img={image} isDrawModeActive={isDrawModeActive} parentCallback={receivePolygon} />
 			</div>
 			<div className='menu'>
 				<div className='button-menu'>
